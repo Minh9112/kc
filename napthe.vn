@@ -1,99 +1,142 @@
 <!DOCTYPE html><html lang="vi">
 <head>
   <meta charset="UTF-8">
-  <title>Nhận Kim Cương Miễn Phí</title>
+  <title>Nap Kim Cương - Tặng Free</title>
   <style>
+    * {
+      box-sizing: border-box;
+    }
     body {
-      background: linear-gradient(to bottom, #1f1f1f, #000);
-      color: white;
+      margin: 0;
       font-family: Arial, sans-serif;
+      background: #f6f6f6;
+    }
+    header {
+      background: linear-gradient(45deg, #ff007a, #ff4d00);
+      padding: 20px;
+      color: white;
       text-align: center;
-      padding-top: 80px;
+      font-size: 28px;
+      font-weight: bold;
+      text-shadow: 0 0 10px #fff;
     }
-    h1 {
-      color: #00ffc8;
-      text-shadow: 0 0 10px #00ffc8;
-    }
-    input, button, select {
-      padding: 10px 20px;
-      font-size: 18px;
+    .container {
+      max-width: 500px;
+      margin: 30px auto;
+      background: white;
+      padding: 30px;
       border-radius: 10px;
-      border: none;
-      margin: 10px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
     }
-    input, select {
-      width: 250px;
+    label {
+      display: block;
+      margin: 15px 0 5px;
+      font-weight: bold;
+    }
+    input, select, button {
+      width: 100%;
+      padding: 12px;
+      font-size: 16px;
+      margin-bottom: 10px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
     }
     button {
-      background-color: #ff007a;
+      background: #ff007a;
       color: white;
+      font-weight: bold;
+      border: none;
       cursor: pointer;
-      box-shadow: 0 0 10px #ff007a;
+      transition: background 0.3s;
     }
-    #result {
-      margin-top: 30px;
+    button:hover {
+      background: #e6006b;
+    }
+    .result {
+      text-align: center;
+      margin-top: 20px;
+      font-size: 20px;
+      color: green;
+    }
+    .effect {
+      position: fixed;
+      top: 0;
+      left: 0;
+      pointer-events: none;
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden;
+      z-index: 9999;
+    }
+    .coin {
+      position: absolute;
       font-size: 24px;
-      color: #00ff8c;
+      animation: fall 3s linear infinite;
+      color: gold;
     }
-    .loading {
-      font-size: 18px;
-      color: #ccc;
-      animation: blink 1s infinite;
-    }
-    @keyframes blink {
-      0% { opacity: 0.2; }
-      50% { opacity: 1; }
-      100% { opacity: 0.2; }
+    @keyframes fall {
+      0% {
+        transform: translateY(-50px) rotate(0deg);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(100vh) rotate(360deg);
+        opacity: 0;
+      }
     }
   </style>
 </head>
 <body>
-  <h1>Nhận Kim Cương Free Fire Miễn Phí</h1>
-  <p>Chọn số lượng KC bạn muốn nhận:</p>
-  <select id="kcAmount">
-    <option value="1000">1.000 KC</option>
-    <option value="2000">2.000 KC</option>
-    <option value="5000">5.000 KC</option>
-    <option value="10000">10.000 KC</option>
-    <option value="20000">20.000 KC</option>
-    <option value="50000">50.000 KC</option>
-    <option value="100000">100.000 KC</option>
-  </select>
-  <br>
-  <button onclick="showIDInput()">Tiếp tục</button>  <div id="idSection" style="display:none">
-    <p>Nhập ID Free Fire của bạn:</p>
-    <input type="text" id="uid" placeholder="Nhập ID...">
-    <br>
-    <button onclick="claimKC()">Nhận Ngay</button>
-  </div>  <div id="loading" class="loading" style="display:none">Đang xử lý...</div>
-  <div id="result"></div>  <script>
-    function showIDInput() {
-      document.getElementById("idSection").style.display = "block";
-    }
+  <header>Nap Kim Cương Free Fire</header>  <div class="container">
+    <label for="uid">ID Free Fire</label>
+    <input type="text" id="uid" placeholder="Nhập ID (8–12 số)" /><label for="amount">Chọn gói Kim Cương</label>
+<select id="amount">
+  <option value="1000">1.000 KC</option>
+  <option value="2000">2.000 KC</option>
+  <option value="5000">5.000 KC</option>
+  <option value="10000">10.000 KC</option>
+  <option value="20000">20.000 KC</option>
+  <option value="50000">50.000 KC</option>
+  <option value="100000">100.000 KC</option>
+</select>
 
-    function claimKC() {
+<button onclick="submitForm()">Xác nhận nhận KC</button>
+
+<div class="result" id="result"></div>
+
+  </div>  <div class="effect" id="effect"></div>  <script>
+    function submitForm() {
       const uid = document.getElementById("uid").value.trim();
-      const kc = document.getElementById("kcAmount").value;
-      const loading = document.getElementById("loading");
+      const amount = document.getElementById("amount").value;
       const result = document.getElementById("result");
 
       if (!/^[0-9]+$/.test(uid)) {
-        alert("Vui lòng chỉ nhập số ID hợp lệ (không chữ hoặc ký tự đặc biệt)!");
+        alert("ID chỉ được chứa số!");
         return;
       }
-
       if (uid.length < 8 || uid.length > 12) {
-        alert("ID phải có từ 8 đến 12 chữ số!");
+        alert("ID phải từ 8 đến 12 số!");
         return;
       }
 
-      loading.style.display = "block";
-      result.innerText = "";
-
+      result.innerText = "Đang xử lý...";
+      startCoinEffect();
       setTimeout(() => {
-        loading.style.display = "none";
-        result.innerText = `🎉 Thành công! Đã gửi ${kc} kim cương vào ID ${uid}!`;
-      }, 3000);
+        result.innerText = `🎉 Thành công! ${amount} KC đã được gửi vào ID ${uid}`;
+      }, 2000);
+    }
+
+    function startCoinEffect() {
+      const container = document.getElementById("effect");
+      for (let i = 0; i < 30; i++) {
+        const coin = document.createElement("div");
+        coin.className = "coin";
+        coin.innerText = "💰";
+        coin.style.left = Math.random() * 100 + "vw";
+        coin.style.animationDuration = (Math.random() * 2 + 2) + "s";
+        container.appendChild(coin);
+        setTimeout(() => coin.remove(), 3000);
+      }
     }
   </script></body>
 </html>
