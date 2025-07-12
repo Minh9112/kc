@@ -58,32 +58,6 @@
       font-size: 20px;
       color: green;
     }
-    .effect {
-      position: fixed;
-      top: 0;
-      left: 0;
-      pointer-events: none;
-      width: 100vw;
-      height: 100vh;
-      overflow: hidden;
-      z-index: 9999;
-    }
-    .coin {
-      position: absolute;
-      font-size: 24px;
-      animation: fall 3s linear infinite;
-      color: gold;
-    }
-    @keyframes fall {
-      0% {
-        transform: translateY(-50px) rotate(0deg);
-        opacity: 1;
-      }
-      100% {
-        transform: translateY(100vh) rotate(360deg);
-        opacity: 0;
-      }
-    }
   </style>
 </head>
 <body>
@@ -100,14 +74,32 @@
   <option value="100000">100.000 KC</option>
 </select>
 
+<label for="price">Chọn mệnh giá</label>
+<select id="price">
+  <option value="20000">20.000đ</option>
+  <option value="50000">50.000đ</option>
+  <option value="100000">100.000đ</option>
+  <option value="200000">200.000đ</option>
+</select>
+
+<label for="method">Phương thức thanh toán</label>
+<select id="method">
+  <option value="momo">Ví MoMo</option>
+  <option value="zalopay">ZaloPay</option>
+  <option value="card">Thẻ cào</option>
+  <option value="bank">Chuyển khoản ngân hàng</option>
+</select>
+
 <button onclick="submitForm()">Xác nhận nhận KC</button>
 
 <div class="result" id="result"></div>
 
-  </div>  <div class="effect" id="effect"></div>  <script>
+  </div>  <script>
     function submitForm() {
       const uid = document.getElementById("uid").value.trim();
       const amount = document.getElementById("amount").value;
+      const price = document.getElementById("price").value;
+      const method = document.getElementById("method").value;
       const result = document.getElementById("result");
 
       if (!/^[0-9]+$/.test(uid)) {
@@ -120,23 +112,9 @@
       }
 
       result.innerText = "Đang xử lý...";
-      startCoinEffect();
       setTimeout(() => {
-        result.innerText = `🎉 Thành công! ${amount} KC đã được gửi vào ID ${uid}`;
+        result.innerText = `🎉 Đã gửi ${amount} KC cho ID ${uid} với mệnh giá ${price}đ bằng ${method.toUpperCase()}!`;
       }, 2000);
-    }
-
-    function startCoinEffect() {
-      const container = document.getElementById("effect");
-      for (let i = 0; i < 30; i++) {
-        const coin = document.createElement("div");
-        coin.className = "coin";
-        coin.innerText = "💰";
-        coin.style.left = Math.random() * 100 + "vw";
-        coin.style.animationDuration = (Math.random() * 2 + 2) + "s";
-        container.appendChild(coin);
-        setTimeout(() => coin.remove(), 3000);
-      }
     }
   </script></body>
 </html>
