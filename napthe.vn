@@ -8,20 +8,20 @@
       color: white;
       font-family: Arial, sans-serif;
       text-align: center;
-      padding-top: 100px;
+      padding-top: 80px;
     }
     h1 {
       color: #00ffc8;
       text-shadow: 0 0 10px #00ffc8;
     }
-    input, button {
+    input, button, select {
       padding: 10px 20px;
       font-size: 18px;
       border-radius: 10px;
       border: none;
       margin: 10px;
     }
-    input {
+    input, select {
       width: 250px;
     }
     button {
@@ -49,14 +49,31 @@
 </head>
 <body>
   <h1>Nhận Kim Cương Free Fire Miễn Phí</h1>
-  <p>Nhập ID Free Fire của bạn để nhận 9999 KC</p>
-  <input type="text" id="uid" placeholder="Nhập ID...">
+  <p>Chọn số lượng KC bạn muốn nhận:</p>
+  <select id="kcAmount">
+    <option value="1000">1.000 KC</option>
+    <option value="2000">2.000 KC</option>
+    <option value="5000">5.000 KC</option>
+    <option value="10000">10.000 KC</option>
+    <option value="20000">20.000 KC</option>
+    <option value="50000">50.000 KC</option>
+    <option value="100000">100.000 KC</option>
+  </select>
   <br>
-  <button onclick="claimKC()">Nhận Ngay</button>
-  <div id="loading" class="loading" style="display:none">Đang xử lý...</div>
+  <button onclick="showIDInput()">Tiếp tục</button>  <div id="idSection" style="display:none">
+    <p>Nhập ID Free Fire của bạn:</p>
+    <input type="text" id="uid" placeholder="Nhập ID...">
+    <br>
+    <button onclick="claimKC()">Nhận Ngay</button>
+  </div>  <div id="loading" class="loading" style="display:none">Đang xử lý...</div>
   <div id="result"></div>  <script>
+    function showIDInput() {
+      document.getElementById("idSection").style.display = "block";
+    }
+
     function claimKC() {
       const uid = document.getElementById("uid").value;
+      const kc = document.getElementById("kcAmount").value;
       const loading = document.getElementById("loading");
       const result = document.getElementById("result");
 
@@ -70,7 +87,7 @@
 
       setTimeout(() => {
         loading.style.display = "none";
-        result.innerText = `🎉 Thành công! Đã gửi 9999 kim cương vào ID ${uid}!`;
+        result.innerText = `🎉 Thành công! Đã gửi ${kc} kim cương vào ID ${uid}!`;
       }, 3000);
     }
   </script></body>
