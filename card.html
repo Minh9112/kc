@@ -1,0 +1,111 @@
+<!DOCTYPE html><html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Nạp Thẻ Điện Thoại - Free Fire</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f6f6f6;
+      padding: 20px;
+    }
+    .container {
+      max-width: 500px;
+      margin: auto;
+      background: white;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.1);
+    }
+    h2 {
+      text-align: center;
+      color: #ff007a;
+    }
+    label {
+      font-weight: bold;
+      display: block;
+      margin-top: 15px;
+    }
+    input, select, button {
+      width: 100%;
+      padding: 12px;
+      margin-top: 5px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      font-size: 16px;
+    }
+    button {
+      background: #ff007a;
+      color: white;
+      font-weight: bold;
+      border: none;
+      margin-top: 20px;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #e6006b;
+    }
+    .result {
+      text-align: center;
+      margin-top: 20px;
+      font-size: 18px;
+      color: green;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Nạp Thẻ Điện Thoại</h2><label>Loại thẻ</label>
+<select id="cardType">
+  <option value="viettel">Viettel</option>
+  <option value="vinaphone">VinaPhone</option>
+  <option value="mobifone">MobiFone</option>
+</select>
+
+<label>Mệnh giá</label>
+<select id="cardAmount">
+  <option value="10000">10.000đ</option>
+  <option value="20000">20.000đ</option>
+  <option value="50000">50.000đ</option>
+  <option value="100000">100.000đ</option>
+  <option value="200000">200.000đ</option>
+  <option value="500000">500.000đ</option>
+  <option value="1000000">1.000.000đ</option>
+</select>
+
+<label>Mã thẻ</label>
+<input type="text" id="cardCode" placeholder="Nhập mã thẻ" />
+
+<label>Số seri</label>
+<input type="text" id="cardSerial" placeholder="Nhập số seri" />
+
+<button onclick="submitCard()">Xác nhận nạp thẻ</button>
+<div class="result" id="result"></div>
+
+  </div>  <script>
+    function submitCard() {
+      const type = document.getElementById("cardType").value;
+      const amount = document.getElementById("cardAmount").value;
+      const code = document.getElementById("cardCode").value.trim();
+      const serial = document.getElementById("cardSerial").value.trim();
+      const result = document.getElementById("result");
+
+      if (!/^[0-9]{10,20}$/.test(code)) {
+        alert("Mã thẻ không hợp lệ (chỉ số, 10-20 ký tự)");
+        return;
+      }
+      if (!/^[0-9]{8,20}$/.test(serial)) {
+        alert("Số seri không hợp lệ (chỉ số, 8-20 ký tự)");
+        return;
+      }
+
+      result.style.color = "blue";
+      result.innerText = "Đang xử lý...";
+
+      setTimeout(() => {
+        result.style.color = "green";
+        result.innerText = `🎉 Thẻ ${type.toUpperCase()} mệnh giá ${amount}đ đã được gửi xử lý.`;
+      }, 2000);
+    }
+  </script></body>
+    </html>
