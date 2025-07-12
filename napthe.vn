@@ -1,53 +1,51 @@
 <!DOCTYPE html><html lang="vi">
 <head>
   <meta charset="UTF-8">
-  <title>Nap Kim Cương - Tặng Free</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Trung Tâm Nạp KC - Free Fire</title>
   <style>
-    * {
-      box-sizing: border-box;
-    }
+    * { box-sizing: border-box; }
     body {
       margin: 0;
       font-family: Arial, sans-serif;
-      background: #f6f6f6;
+      background: #f2f2f2;
     }
     header {
-      background: linear-gradient(45deg, #ff007a, #ff4d00);
-      padding: 20px;
+      background: linear-gradient(45deg, #ff4d00, #ff007a);
       color: white;
+      padding: 20px;
       text-align: center;
       font-size: 28px;
       font-weight: bold;
-      text-shadow: 0 0 10px #fff;
+      text-shadow: 0 0 5px #fff;
     }
     .container {
       max-width: 500px;
       margin: 30px auto;
-      background: white;
+      background: #fff;
       padding: 30px;
       border-radius: 10px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+      box-shadow: 0 0 20px rgba(0,0,0,0.1);
     }
     label {
-      display: block;
-      margin: 15px 0 5px;
       font-weight: bold;
+      display: block;
+      margin-top: 15px;
     }
     input, select, button {
       width: 100%;
       padding: 12px;
       font-size: 16px;
-      margin-bottom: 10px;
-      border: 1px solid #ccc;
+      margin-top: 5px;
       border-radius: 8px;
+      border: 1px solid #ccc;
     }
     button {
       background: #ff007a;
       color: white;
-      font-weight: bold;
       border: none;
-      cursor: pointer;
-      transition: background 0.3s;
+      font-weight: bold;
+      margin-top: 20px;
     }
     button:hover {
       background: #e6006b;
@@ -55,24 +53,47 @@
     .result {
       text-align: center;
       margin-top: 20px;
-      font-size: 20px;
+      font-size: 18px;
       color: green;
     }
-    .bank-info {
-      margin-top: 30px;
-      text-align: center;
-      background: #fff5f5;
-      padding: 15px;
-      border: 1px dashed #ff007a;
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.6);
+      justify-content: center;
+      align-items: center;
+      z-index: 999;
+    }
+    .modal-content {
+      background: white;
+      padding: 20px;
       border-radius: 8px;
-      font-size: 16px;
+      text-align: center;
+      width: 90%;
+      max-width: 400px;
+    }
+    .modal-content img {
+      width: 200px;
+      margin-bottom: 15px;
+    }
+    .close {
+      margin-top: 15px;
+      display: inline-block;
+      padding: 10px 20px;
+      background: #ff4d4d;
+      color: white;
+      border-radius: 5px;
+      cursor: pointer;
     }
   </style>
 </head>
 <body>
-  <header>Nap Kim Cương Free Fire</header>  <div class="container">
-    <label for="uid">ID Free Fire</label>
-    <input type="text" id="uid" placeholder="Nhập ID (8–12 số)" /><label for="amount">Chọn gói Kim Cương</label>
+  <header>Nap Kim Cương Free Fire</header>
+  <div class="container">
+    <label>ID Free Fire</label>
+    <input type="text" id="uid" placeholder="Nhập ID (8–12 số)" /><label>Gói Kim Cương</label>
 <select id="amount">
   <option value="1000">1.000 KC</option>
   <option value="2000">2.000 KC</option>
@@ -83,7 +104,7 @@
   <option value="100000">100.000 KC</option>
 </select>
 
-<label for="price">Chọn mệnh giá</label>
+<label>Mệnh giá</label>
 <select id="price">
   <option value="20000">20.000đ</option>
   <option value="50000">50.000đ</option>
@@ -91,25 +112,25 @@
   <option value="200000">200.000đ</option>
 </select>
 
-<label for="method">Phương thức thanh toán</label>
+<label>Phương thức thanh toán</label>
 <select id="method">
-  <option value="momo">Ví MoMo</option>
+  <option value="momo">MoMo</option>
   <option value="zalopay">ZaloPay</option>
-  <option value="card">Thẻ cào</option>
-  <option value="bank">Chuyển khoản ngân hàng</option>
+  <option value="bank">Ngân hàng</option>
 </select>
 
-<button onclick="submitForm()">Xác nhận nhận KC</button>
-
+<button onclick="submitForm()">Xác nhận</button>
 <div class="result" id="result"></div>
 
-<div class="bank-info">
-  <strong>Thông tin chuyển khoản:</strong><br>
-  Ngân hàng: <b>MB Bank</b><br>
-  Số tài khoản: <b>0823395210</b><br>
-  Tên tài khoản: <b>NGUYEN VAN A</b>
-</div>
-
+  </div>  <div class="modal" id="paymentModal">
+    <div class="modal-content">
+      <h3>Yêu cầu thanh toán</h3>
+      <img src="https://minhgpt.github.io/files/qrmomo.png" alt="QR MoMo" id="qrImage" />
+      <p><strong>STK:</strong> 0823395210 (MB Bank)</p>
+      <p><strong>Tên:</strong> NGUYEN VAN A</p>
+      <p><strong>Nội dung:</strong> NapKC - <span id="uidDisplay"></span></p>
+      <div class="close" onclick="confirmPayment()">Tôi đã thanh toán</div>
+    </div>
   </div>  <script>
     function submitForm() {
       const uid = document.getElementById("uid").value.trim();
@@ -119,16 +140,25 @@
       const result = document.getElementById("result");
 
       if (!/^[0-9]+$/.test(uid)) {
-        alert("ID chỉ được chứa số!");
-        return;
+        alert("ID chỉ được chứa số!"); return;
       }
       if (uid.length < 8 || uid.length > 12) {
-        alert("ID phải từ 8 đến 12 số!");
-        return;
+        alert("ID phải từ 8 đến 12 số!"); return;
       }
 
-      result.innerHTML = `💳 Vui lòng thanh toán <b>${price}đ</b> qua <b>${method.toUpperCase()}</b><br>
-        Sau khi thanh toán, <b>${amount} KC</b> sẽ được xử lý và gửi đến ID <b>${uid}</b>`;
+      document.getElementById("uidDisplay").innerText = uid;
+      const qr = document.getElementById("qrImage");
+      if (method === "momo") qr.src = "https://minhgpt.github.io/files/qrmomo.png";
+      else if (method === "zalopay") qr.src = "https://minhgpt.github.io/files/qrzalo.png";
+      else qr.src = "https://minhgpt.github.io/files/qrbank.png";
+
+      document.getElementById("paymentModal").style.display = "flex";
+      result.innerHTML = "";
+    }
+
+    function confirmPayment() {
+      document.getElementById("paymentModal").style.display = "none";
+      window.location.href = "success.html"; // Điều hướng tới trang xác nhận thành công
     }
   </script></body>
 </html>
