@@ -58,6 +58,15 @@
       font-size: 20px;
       color: green;
     }
+    .bank-info {
+      margin-top: 30px;
+      text-align: center;
+      background: #fff5f5;
+      padding: 15px;
+      border: 1px dashed #ff007a;
+      border-radius: 8px;
+      font-size: 16px;
+    }
   </style>
 </head>
 <body>
@@ -94,6 +103,13 @@
 
 <div class="result" id="result"></div>
 
+<div class="bank-info">
+  <strong>Thông tin chuyển khoản:</strong><br>
+  Ngân hàng: <b>MB Bank</b><br>
+  Số tài khoản: <b>0823395210</b><br>
+  Tên tài khoản: <b>NGUYEN VAN A</b>
+</div>
+
   </div>  <script>
     function submitForm() {
       const uid = document.getElementById("uid").value.trim();
@@ -111,10 +127,8 @@
         return;
       }
 
-      result.innerText = "Đang xử lý...";
-      setTimeout(() => {
-        result.innerText = `🎉 Đã gửi ${amount} KC cho ID ${uid} với mệnh giá ${price}đ bằng ${method.toUpperCase()}!`;
-      }, 2000);
+      result.innerHTML = `💳 Vui lòng thanh toán <b>${price}đ</b> qua <b>${method.toUpperCase()}</b><br>
+        Sau khi thanh toán, <b>${amount} KC</b> sẽ được xử lý và gửi đến ID <b>${uid}</b>`;
     }
   </script></body>
 </html>
