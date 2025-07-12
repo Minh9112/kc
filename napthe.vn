@@ -72,13 +72,18 @@
     }
 
     function claimKC() {
-      const uid = document.getElementById("uid").value;
+      const uid = document.getElementById("uid").value.trim();
       const kc = document.getElementById("kcAmount").value;
       const loading = document.getElementById("loading");
       const result = document.getElementById("result");
 
-      if (!uid || uid.length < 5) {
-        alert("Vui lòng nhập ID hợp lệ!");
+      if (!/^[0-9]+$/.test(uid)) {
+        alert("Vui lòng chỉ nhập số ID hợp lệ (không chữ hoặc ký tự đặc biệt)!");
+        return;
+      }
+
+      if (uid.length < 8 || uid.length > 12) {
+        alert("ID phải có từ 8 đến 12 chữ số!");
         return;
       }
 
